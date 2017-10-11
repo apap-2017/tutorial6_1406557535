@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Daftar Mahasiswa</title>
+</head>
+<div th:replace="fragments/header"></div>
+<div class="container">
+      <h1>All Students</h1>
+      
+      <table id="myTable">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>NPM</th>
+        <th>Name</th>
+        <th>GPA</th>
+        <th>Cum laude</th>
+        <th>Delete</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student,iterationStatus: ${students}" th:class="${iterationStatus.odd}? 'odd'">
+    	<td th:text="${iterationStatus.count}">No. 1</td>
+    	<td th:text="${student.npm}">NPM</td>
+    	<td th:text="${student.name}">Name</td>
+    	<td th:text="${student.gpa}">GPA</td>
+    	<td th:text="((${student.gpa} >= 3.49)? 'Cum Laude!' : 'Sangat Memuaskan') ">GPA</td>
+    	<td><a th:href="'/student/delete/' + ${student.npm}">Delete</a></td>
+    	<td><a th:href="'/student/update/' + ${student.npm}">Update</a><br/></td>
+  		</tr>
+    </tbody>
+  </table>
+  
+      <br/><br/><br/><br/>
+      
+  	<div th:each="student,iterationStatus: ${students}" th:class="${iterationStatus.odd}? 'odd'">
+  		
+  		 
+  		<a th:href="'/student/delete/' + ${student.npm}">Delete Data</a><br/>
+      	<a th:href="'/student/update/' + ${student.npm}">Update Data</a><br/>
+          <h3 th:text="'No. ' + ${iterationStatus.odd}">No. 1</h3>
+      	<h3 th:text="'NPM = ' + ${student.npm}">Student NPM</h3>
+      	<h3 th:text="'Name = ' + ${student.name}">Student Name</h3>
+      	<!--  <h3 th:if="${student.gpa>=3.49}">Cum Laude!</h3> 
+      	<h3 th:unless="${student.gpa>=3.2}">Sangat Memuaskan</h3>  -->
+      	<h3 th:text="((${student.gpa} >= 3.49)? 'Cum Laude!' : 'Sangat Memuaskan') "></h3>
+      	<h3 th:text="'GPA = ' + ${student.gpa}">Student GPA</h3>
+      	
+      	<h3>Kuliah yang sedang diambil</h3>
+       	<ul th:each="course,iterationStatus: ${student.courses}">
+       		<li th:text="${course.name} + '-' + ${course.credits} + ' sks'">
+       			Nama kuliah-X SKS
+       		</li>
+       	</ul>
+      	
+      	<hr/>
+     	</div>
+<div th:replace="fragments/footer"></div>
+</div>
+</html>
